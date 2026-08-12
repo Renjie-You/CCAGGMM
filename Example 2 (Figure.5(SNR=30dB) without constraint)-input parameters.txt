@@ -1,0 +1,26 @@
+%% Initialize parameters
+spectrum_number = 2; % Number of sub-spectras.
+% Method selection parameter
+key = 1; % Method selection parameter for spectral decomposition: =1 for CCAGGMM; % =2 for GMM; % =3 for executing both CCAGGMM and GMM separately.
+light_switch = 2; % Numerical solver selection parameter: =1 Newton-Raphson method; % =2 Brute-force method.
+% inputs for CCAGGMM
+if key == 1 || key == 3
+    CCAGGMM_para = zeros(5, spectrum_number); % Initial values of the sub spectrum parameters for CCAGGMM.
+    confidence = 1; % Confidence level: = 1-pc.
+    CCAGGMM_para(1,:) = [0.5 0.5]; % Weight.
+    CCAGGMM_para(2,:) = [30 70]; % Expectation.
+    CCAGGMM_para(3,:) = [5 10]; % Left branch scale factor.
+    CCAGGMM_para(4,:) = [5 10]; % Right branch scale factor.
+    CCAGGMM_para(5,:) = [2 5]; % Shape factor.
+end
+% inputs for GMM
+if key == 2 || key == 3
+    GMM_para = zeros(3, spectrum_number); % Initial values of the sub spectrum parameters for GMM.
+    GMM_para(1,:) = [0.5 0.5]; % Weight.
+    GMM_para(2,:) = [30 70]; % Expectation.
+    GMM_para(3,:) = [5 10]; % Standard deviation.
+end
+% Iteration termination parameters
+CCAGGMM_circle = 200; % Maximum number of iterations for the EM algorithm.
+NR_circle = 100; % Maximum number of iterations for the Newton Raphson method.
+NR_tol = 1e-10; % Tolerance of Newton Raphson method.
